@@ -173,6 +173,7 @@ let projects = JSON.parse(JSON.stringify(initialProjects));
 let testimonials = [];
 const $ = id => document.getElementById(id);
 $("year").textContent = new Date().getFullYear();
+renderProjects();renderTestimonials();
 
 function renderProjects(){
  const grid=$("projectGrid"); grid.innerHTML="";
@@ -226,12 +227,12 @@ function renderTestimonialEditor(){
 }
 function openOwner(){ $("ownerPanel").classList.add("open");$("ownerPanel").setAttribute("aria-hidden","false");document.body.style.overflow="hidden";renderProjectEditor();renderTestimonialEditor(); }
 function closeOwner(){ $("ownerPanel").classList.remove("open");$("ownerPanel").setAttribute("aria-hidden","true");document.body.style.overflow=""; }
-$("openOwner").addEventListener("click",openOwner);$("closeOwner").addEventListener("click",closeOwner);
+$("openOwner")?.addEventListener("click",openOwner);$("closeOwner").addEventListener("click",closeOwner);
 $("addProject").addEventListener("click",()=>{projects.push({title:"New portfolio project",desc:"Add a short description",image:""});renderProjectEditor();renderProjects();});
 $("addTestimonial").addEventListener("click",()=>{testimonials.push({quote:"",by:""});renderTestimonialEditor();});
 $("editContact").addEventListener("input",e=>{$("contactLink").href=e.target.value;});
 $("previewPublic").addEventListener("click",()=>{closeOwner();document.body.classList.add("public-preview");window.scrollTo({top:0,behavior:"smooth"});});
-$("exitOwner").addEventListener("click",()=>{document.body.classList.remove("owner-mode");$("ownerTools").style.display="none";closeOwner();history.replaceState(null,"",location.pathname);window.scrollTo({top:0,behavior:"smooth"});});
+$("exitOwner")?.addEventListener("click",()=>{document.body.classList.remove("owner-mode");$("ownerTools").style.display="none";closeOwner();history.replaceState(null,"",location.pathname);window.scrollTo({top:0,behavior:"smooth"});});
 $("exportSite").addEventListener("click",()=>{
  const doc=document.documentElement.cloneNode(true);
  const p=doc.querySelector("#projectGrid");p.innerHTML="";
@@ -246,14 +247,6 @@ $("exportSite").addEventListener("click",()=>{
  const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="ndlawtech-professional-portfolio.html";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
  $("ownerStatus").textContent="Updated website downloaded. Upload this HTML file to your hosting service to publish the changes.";
 });
-renderProjects();renderTestimonials();
-const params=new URLSearchParams(location.search);
-if(params.get("owner")==="edit"){document.body.classList.add("owner-mode");openOwner();}
-</script>
-</body></html>xtContent="Updated website downloaded. Upload this HTML file to your hosting service to publish the changes.";
-});
-renderProjects();renderTestimonials();
-const params=new URLSearchParams(location.search);
 // Owner editor is intentionally hidden. Tap the copyright line five times to open it.
 let ownerTapCount=0, ownerTapTimer=null;
 function handleOwnerTap(){
@@ -267,7 +260,7 @@ function handleOwnerTap(){
     openOwner();
   }
 }
-$("ownerTrigger").addEventListener("click",handleOwnerTap);
-$("ownerTrigger").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();handleOwnerTap();}});
+$("ownerTrigger")?.addEventListener("click",handleOwnerTap);
+$("ownerTrigger")?.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();handleOwnerTap();}});
 </script>
 </body></html>
